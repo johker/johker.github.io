@@ -4,7 +4,7 @@
   <title><![CDATA[Almost Automatic]]></title>
   <link href="http://johker.github.io/atom.xml" rel="self"/>
   <link href="http://johker.github.io/"/>
-  <updated>2014-04-19T10:07:07+00:00</updated>
+  <updated>2014-04-19T11:02:33+00:00</updated>
   <id>http://johker.github.io/</id>
   <author>
     <name><![CDATA[Johannes Kern]]></name>
@@ -14,11 +14,56 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Zombie Ninjas Attack: A survivor's retrospective]]></title>
-    <link href="http://johker.github.io/blog/2014/04/19/zombie-ninjas-attack-a-survivors-retrospective/"/>
-    <updated>2014-04-19T08:06:43+00:00</updated>
-    <id>http://johker.github.io/blog/2014/04/19/zombie-ninjas-attack-a-survivors-retrospective</id>
-    <content type="html"><![CDATA[
+    <title type="html"><![CDATA[A very basic Octopress setup using Vagrant]]></title>
+    <link href="http://johker.github.io/blog/2014/04/19/a-very-basic-octopress-setup-using-vagrant/"/>
+    <updated>2014-04-19T10:39:13+00:00</updated>
+    <id>http://johker.github.io/blog/2014/04/19/a-very-basic-octopress-setup-using-vagrant</id>
+    <content type="html"><![CDATA[<p>Setting up Octopress can be easier running it on a Vagrant powered virtual machine. In this case Ubuntu 12.04 LTS serves as a base box.</p>
+
+<figure class='code'><figcaption><span>Vagrantfile</span><a href='https://github.com/johker/octopress_vagrant/blob/master/Vagrantfile'>github </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="ss">:private_network</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.34.10&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">v</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="mi">2048</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Install octopress</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:shell</span><span class="p">,</span> <span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;scripts/octopress.sh&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Sync posts folder</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;posts/&quot;</span><span class="p">,</span> <span class="s2">&quot;/opt/octopress/source/_posts/&quot;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Any libraries Octopress requires are installed using a simple shell script.</p>
 ]]></content>
   </entry>
   
