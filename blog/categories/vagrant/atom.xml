@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Vagrant | My Octopress Blog]]></title>
+  <link href="http://johker.github.io/blog/categories/vagrant/atom.xml" rel="self"/>
+  <link href="http://johker.github.io/"/>
+  <updated>2015-01-03T17:39:26+00:00</updated>
+  <id>http://johker.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A Very Basic Octopress Setup Using Vagrant]]></title>
+    <link href="http://johker.github.io/blog/2015/01/03/a-very-basic-octopress-setup-using-vagrant/"/>
+    <updated>2015-01-03T16:49:58+00:00</updated>
+    <id>http://johker.github.io/blog/2015/01/03/a-very-basic-octopress-setup-using-vagrant</id>
+    <content type="html"><![CDATA[<p>Setting up Octopress can be tricky, especially on Windows systems. Using a Vagrant powered virtual machine instead we are only one command away from a blogging environment ready-to-go. Run from the directory of the Vagrantfile <em>vagrant up</em> will create a VirtualBox Image with Ubuntu 12.04 LTS.</p>
+
+<pre><code class="ruby Vagrantfile for Octopress Setup https://github.com/johker/octopress_vagrant/blob/master/Vagrantfile Source Article">VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    config.vm.box = "octopress" 
+
+    config.vm.box_url = "https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14.04/ubuntu-14.04-amd64.box"
+
+    config.vm.network :private_network, ip: "192.168.34.10"
+
+    config.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+    end
+
+    # Install octopress
+    config.vm.provision :shell, :path =&gt; "scripts/octopress.sh"
+
+    # Sync posts folder     
+    config.vm.synced_folder "posts/", "/opt/octopress/source/_posts/"
+
+end
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
