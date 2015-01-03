@@ -8,10 +8,10 @@ categories: [Vagrant, Octopress, github]
 ---
 
 
-Setting up Octopress can be tricky, especially on Windows systems. Using a Vagrant powered virtual machine instead we are only one command away from a blogging environment ready-to-go. Run from the directory of the Vagrantfile *vagrant up* will create a VirtualBox Image with Ubuntu 12.04 LTS.
+Setting up Octopress can be tricky, especially on Windows systems. Using a Vagrant powered virtual machine instead we are only one command away from a blogging environment ready-to-go. Run from the directory of the Vagrantfile *vagrant up* will create a VirtualBox Image with Ubuntu 14.04 LTS.
 
 
-``` ruby Vagrantfile for Octopress Setup https://github.com/johker/octopress_vagrant/blob/master/Vagrantfile Source Article
+``` ruby Vagrantfile for Octopress Setup https://github.com/johker/octopress_vagrant/blob/master/Vagrantfile github
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
