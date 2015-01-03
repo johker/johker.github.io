@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Almost Automatic]]></title>
+  <link href="http://johker.github.io/atom.xml" rel="self"/>
+  <link href="http://johker.github.io/"/>
+  <updated>2014-04-19T17:20:30+00:00</updated>
+  <id>http://johker.github.io/</id>
+  <author>
+    <name><![CDATA[Johannes Kern]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A very basic Octopress setup using Vagrant]]></title>
+    <link href="http://johker.github.io/blog/2014/04/19/a-very-basic-octopress-setup-using-vagrant/"/>
+    <updated>2014-04-19T10:39:13+00:00</updated>
+    <id>http://johker.github.io/blog/2014/04/19/a-very-basic-octopress-setup-using-vagrant</id>
+    <content type="html"><![CDATA[<p>Setting up Octopress can be tricky, especially on Windows systems. Using a Vagrant powered virtual machine instead we are only one command away from a blogging environment ready-to-go. Run from the directory of the Vagrantfile <code>vagrant up</code> will create a VirtualBox Image with Ubuntu 12.04 LTS.</p>
+
+<figure class='code'><figcaption><span>Vagrantfile</span><a href='https://github.com/johker/octopress_vagrant/blob/master/Vagrantfile'>github </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box&quot;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="ss">:private_network</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.34.10&quot;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">v</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="mi">2048</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  
+</span><span class='line'><span class="c1"># Install octopress</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:shell</span><span class="p">,</span> <span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;scripts/octopress.sh&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Sync posts folder</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;posts/&quot;</span><span class="p">,</span> <span class="s2">&quot;/opt/octopress/source/_posts/&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The actual installation is done by shell provisioning. <code>octopress.sh</code> has to be included in the scripts folder relative to the Vagrantfile. It installs git, ruby and grants access to the default user <code>vagrant</code>.</p>
+
+<figure class='code'><figcaption><span>octopress.sh</span><a href='https://github.com/johker/octopress_vagrant/blob/master/scripts/octopress.sh'>github </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'>sudo apt-get -y update
+</span><span class='line'>
+</span><span class='line'>sudo apt-get -y install curl
+</span><span class='line'>
+</span><span class='line'><span class="se">\c</span>url -L https://get.rvm.io | bash -s stable
+</span><span class='line'>
+</span><span class='line'><span class="nb">source</span> ~/.rvm/scripts/rvm
+</span><span class='line'>
+</span><span class='line'>rvm install ruby
+</span><span class='line'>
+</span><span class='line'>rvm use ruby --default
+</span><span class='line'>
+</span><span class='line'>sudo chown -R vagrant /opt
+</span><span class='line'>
+</span><span class='line'><span class="nb">cd</span> /opt
+</span><span class='line'>
+</span><span class='line'>sudo apt-get install -y git-core
+</span><span class='line'>
+</span><span class='line'>git clone git://github.com/imathis/octopress.git
+</span><span class='line'>
+</span><span class='line'><span class="nb">cd</span> /opt/octopress
+</span><span class='line'>
+</span><span class='line'>gem install bundler
+</span><span class='line'><span class="c"># sudo apt-get bundler install</span>
+</span><span class='line'>
+</span><span class='line'>bundle install
+</span><span class='line'>
+</span><span class='line'>rake install
+</span><span class='line'>
+</span><span class='line'>sudo chown -R vagrant /opt/octopress
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Only thing left is to create a posts folder which is used to access the markdown files generated by <code>rake new_post</code> with an IDE from the host system. Any changes will be synchronized automatically. The complete project can be found <a href="https://github.com/johker/octopress_vagrant">here</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>
